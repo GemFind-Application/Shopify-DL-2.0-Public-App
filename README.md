@@ -104,7 +104,7 @@ Step 8: Upload these JS and CSS files to the server.
 
 Step 9: Rename the JS and CSS files to `main.js` and `main.css` respectively.
 
-# Gemfind-DL-2.0-Vite (If You Install Latest Composer , Then you need to Apply Following changes on your vendor package)
+### Gemfind-DL-2.0-Vite (If You Install Latest Composer , Then you need to Apply Following changes on your vendor package)
 
 After taking git clone :
 
