@@ -44,7 +44,7 @@ Step 5: Add `SHOPIFY_API_KEY` and `SHOPIFY_API_SECRET` to the `shopify-app.php` 
 
 	'api_secret' => env('SHOPIFY_API_SECRET', 'XXXXXXXXXX'), // Replace with your actual key
 
-	Step 6: If you are working locally, you might need the `vendor` folder for Laravel. Currently, it is managed server-side, but if needed, you can download it from the server's root folder.
+Step 6: If you are working locally, you might need the `vendor` folder for Laravel. Currently, it is managed server-side, but if needed, you can download it from the server's root folder.
 
 
 
