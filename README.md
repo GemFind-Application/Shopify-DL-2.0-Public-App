@@ -108,11 +108,11 @@ Step 9: Rename the JS and CSS files to `main.js` and `main.css` respectively.
 
 After taking git clone :
 
-1.composer install
+    1.composer install
 
-2.npm install
+    2.npm install
 
-3.For backend app build run "npm run build" command -> build will be generated in public/build folder -> upload whole build folder in live
+    3.For backend app build run "npm run build" command -> build will be generated in public/build folder -> upload whole build folder in live
 
 Always use npm run dev for generate build of react backend
 if npm run watch will be used then env variables cannot be accessed
