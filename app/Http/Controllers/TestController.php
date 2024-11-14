@@ -124,7 +124,7 @@ class TestController extends Controller
         $api_key = env('VITE_SHOPIFY_API_KEY');
         $data['webhook'] = array(
             "topic"     => "app/uninstalled",
-            'address'   => "https://gemfind.usdl2./api/appUninstallJob"
+            'address'   => "https://gfdiamondlink.com/api/appUninstallJob"
             //'address'   => "https://gfdiamondlink.com/api/appShopUpdateJob"
         );
 
@@ -158,7 +158,7 @@ class TestController extends Controller
         $api_key = env('VITE_SHOPIFY_API_KEY');
         $data['webhook'] = array(
             "topic"     => "shop/update",
-            'address'   => "https://dl2.gemfind.us/api/appShopUpdateJob"
+            'address'   => "https://gfdiamondlink.com/api/appShopUpdateJob"
         );
 
         $password = $_REQUEST['password'];

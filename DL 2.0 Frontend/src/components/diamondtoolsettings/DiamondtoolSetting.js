@@ -3042,7 +3042,7 @@ const DiamondtoolSetting = (props) => {
                background-color: ${window.initData["data"][0].hover_colour} !important;
             }
             @media screen and (max-width: 991px) { 
-                .shapes ul .shapes_lists .shape_box:hover {
+                .gf-shapes ul .shapes_lists .shape_box:hover {
                     background-color: inherit;
                 }
             }

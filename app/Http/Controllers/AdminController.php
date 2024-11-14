@@ -52,7 +52,7 @@ class AdminController extends Controller
 
     public function couons_index()
     {
-        return view('admin.coupon.index');
+        return view('admin.coupon.index')->with('totalPriceENV', env('APP_TOTAL_CHARGE'));
     }
 
     public function create_coupon()
@@ -69,13 +69,13 @@ class AdminController extends Controller
             'discount_type' => 'required',
             'discount_value' => 'required',
         ], [
-                'shop.required' => 'The Shop field is required.',
-                'shop.unique'    => 'Coupon is already exists for this shop.',
-                'discount_code.unique' => 'You can\'t create more than one coupon for the same shop.',
-                'discount_code.required' => 'The Discound Code field is required.',
-                'discount_type.required' => 'The Discound Type field is required.',
-                'discount_value.required' => 'The Discound Value field is required.',
-            ]);
+            'shop.required' => 'The Shop field is required.',
+            'shop.unique'    => 'Coupon is already exists for this shop.',
+            'discount_code.unique' => 'You can\'t create more than one coupon for the same shop.',
+            'discount_code.required' => 'The Discound Code field is required.',
+            'discount_type.required' => 'The Discound Type field is required.',
+            'discount_value.required' => 'The Discound Value field is required.',
+        ]);
 
         $coupon = new Coupon;
         $coupon->shop = $request->shop;
@@ -102,13 +102,13 @@ class AdminController extends Controller
             'discount_type' => 'required',
             'discount_value' => 'required',
         ], [
-                'shop.required' => 'The Shop field is required.',
-                'shop.unique' => 'Coupon is already exists for this shop.',
-                'discount_code.unique' => 'You can\'t create more than one coupon for the same shop.',
-                'discount_code.required' => 'The Discound Code field is required.',
-                'discount_type.required' => 'The Discound Type field is required.',
-                'discount_value.required' => 'The Discound Value field is required.',
-            ]);
+            'shop.required' => 'The Shop field is required.',
+            'shop.unique' => 'Coupon is already exists for this shop.',
+            'discount_code.unique' => 'You can\'t create more than one coupon for the same shop.',
+            'discount_code.required' => 'The Discound Code field is required.',
+            'discount_type.required' => 'The Discound Type field is required.',
+            'discount_value.required' => 'The Discound Value field is required.',
+        ]);
 
         $coupon = Coupon::where('id', $id)->first();
         $coupon->shop = $request->shop;
@@ -126,5 +126,4 @@ class AdminController extends Controller
         Coupon::where('id', $id)->delete();
         return redirect(route('gfadmin.couons_index'))->with('success', "Coupon has been deleted Successfully.");
     }
-
 }

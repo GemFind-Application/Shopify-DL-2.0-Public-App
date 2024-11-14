@@ -24,7 +24,11 @@ class InitToolController extends Controller
             ->first();
         $css_configuration = CssConfigure::where(['shop' => $request->shop_domain])->first();
         // echo '<pre>';print_r($settingData);exit;
-        $jewelCloudApi = 'http://api.jewelcloud.com/api/RingBuilder/GetDiamondsJCOptions?DealerID=' . $settingData->dealerid;
+        if($settingData->jcoptionapi) {
+            $jewelCloudApi = $settingData->jcoptionapi . 'DealerID='.$settingData->dealerid;
+        }else{
+            $jewelCloudApi = 'http://api.jewelcloud.com/api/RingBuilder/GetDiamondsJCOptions?DealerID=' . $settingData->dealerid;
+        }
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $jewelCloudApi);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -35,6 +39,17 @@ class InitToolController extends Controller
         // echo '<pre>';
         // print_r($settingData);
         // exit;
+
+        $chargeData = Charges::join('users', 'users.id', '=', 'charges.user_id')
+            ->where('users.name', $request->shop_domain)
+            ->value('charges.charge_id');
+
+        // Set dealerid based on charge data
+        if (!empty($chargeData)) {
+            $settingData->dealerid = $settingData->dealerid;
+        } else {
+            $settingData->dealerid = '';
+        }
 
         foreach ($server_output as $value) {
             foreach ($value as $val) {
@@ -127,7 +142,7 @@ class InitToolController extends Controller
             $settingData->is_api = 'true';
         }
 
-        $this->getStyleSetting($settingData->dealerid);
+        $this->getStyleSetting($settingData->dealerid ? $settingData->dealerid : '1089');
         $settingData->type_1 = (string) $settingData->type_1;
         $settingData->internalUseLink = (string) $internalUseLink;
         $settingData->enable_schedule_viewing = (string) $settingData->enable_schedule_viewing !== '' ? $settingData->enable_schedule_viewing : $scheduleView;
@@ -156,10 +171,10 @@ class InitToolController extends Controller
         $settingData->from_email_address = (string) $settingData->from_email_address;
         $settingData->shop_access_token = (string) $settingData->shop_access_token;
         $settingData->server_url = (string) $protocol . '://' . request()->getHost();
-        $settingData->currency = $this->getCurrency($settingData->dealerid);
-        $settingData->currencyFrom = $this->getCurrencyFrom($settingData->dealerid);
+        $settingData->currency = $this->getCurrency($settingData->dealerid ? $settingData->dealerid : '1089');
+        $settingData->currencyFrom = $this->getCurrencyFrom($settingData->dealerid ? $settingData->dealerid : '1089');
 
-        $styleSettingColors = $this->getStyleSetting($settingData->dealerid);
+        $styleSettingColors = $this->getStyleSetting($settingData->dealerid ? $settingData->dealerid : '1089');
         $hoverEffect = $styleSettingColors['hoverEffect'];
         $columnHeaderAccent = $styleSettingColors['columnHeaderAccent'];
         $linkColor = $styleSettingColors['linkColor'];
@@ -420,19 +435,19 @@ class InitToolController extends Controller
             $user['to'] = $recipients;
             Mail::send('uninstallEmail', $data, function ($messages) use ($user) {
                 $messages->to($user['to']);
-                $messages->subject('Gemfind DiamondToolⓇ App Uninstall');
+                $messages->subject('GemFind DiamondToolⓇ App Uninstall');
             });
 
 
 
             $user['to'] = $getCustomerData && $getCustomerData->email ? $getCustomerData->email : $request->email;
             $user['from'] = 'support@gemfind.com';
-            $user['store'] =  'Gemfind DiamondLink 2.0';
+            $user['store'] =  'GemFind DiamondLink 2.0';
 
             Mail::send('uninstallStoreAdminEmail', $data, function ($messages) use ($user) {
                 $messages->to($user['to']);
                 $messages->replyTo($user['from'],  $user['store']);
-                $messages->subject('How did Infinite Options not meet your needs?');
+                $messages->subject('How did GemFind DiamondToolⓇ not meet your needs?');
             });
 
             file_put_contents($path . '/getCustomerData.txt', json_encode($getCustomerData));

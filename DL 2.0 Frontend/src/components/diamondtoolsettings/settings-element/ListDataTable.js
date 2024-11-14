@@ -79,6 +79,10 @@ const ListDataTable = (props) => {
   const [loaded, setLoaded] = useState(false);
   // const [getShowPrice, setShowPrice] = useState();
 
+  const [getbrowserdiamondcookies, setbrowserdiamondcookies] = useCookies([
+    "shopify_diamondbackvalue",
+  ]);
+
   const [getcomparediamondcookies, setcomparediamondcookies] = useCookies([
     "shopify_comparedata",
   ]);
@@ -347,9 +351,35 @@ const ListDataTable = (props) => {
 
   const handleSetBackValue = (item, e) => {
     e.preventDefault();
-    // console.log(props);
-    console.log("item test");
-    console.log(item.fancyColorIntensity);
+    console.log("props");
+    console.log(props);
+
+    var finalSetBackValue = [];
+    finalSetBackValue.push({
+      shapeName: props.selectValue.shapeName,
+      selectedCut: props.selectValue.selectedCut,
+      selectedColor: props.selectValue.selectedColor,
+      selectedClarity: props.selectValue.selectedClarity,
+      caratmin: props.selectValue.caratmin,
+      caratmax: props.selectValue.caratmax,
+      pricemin: props.selectValue.pricemin,
+      pricemax: props.selectValue.pricemax,
+      selectedFlour: props.selectValue.selectedFlour,
+      selectedPolish: props.selectValue.selectedPolish,
+      selectedfancyColor: props.selectValue.selectedfancyColor,
+      selectedfancyIntensity: props.selectValue.selectedfancyIntensity,
+      selectedmaxDept: props.selectValue.selectedmaxDept,
+      selectedminDept: props.selectValue.selectedminDept,
+      selectedmaxtable: props.selectValue.selectedmaxtable,
+      selectedmintable: props.selectValue.selectedmintable,
+      selectedSymmetry: props.selectValue.selectedSymmetry,
+      diamondId: item.diamondId,
+    });
+
+    setbrowserdiamondcookies("shopify_diamondbackvalue", finalSetBackValue, {
+      path: "/",
+      maxAge: 604800,
+    });
 
     if (item.isLabCreated === true || item.isLabCreated === "true") {
       navigate(

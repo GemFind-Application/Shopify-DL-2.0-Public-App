@@ -48,6 +48,9 @@
             }
         }
         h4.gf-ring-spacifacation {
+            @media (max-width: 992px) {
+                display: none;
+            }
             line-height: 21px;
             font-size: 14px;
             text-transform: capitalize;
@@ -382,6 +385,13 @@
     max-width: 100%;
     float: left;
     width: 100%;
+    
+    @media (max-width: 991px) {
+        margin-bottom: 16px;
+    }
+    @media (max-width: 425px) {   
+        width: calc(100% + 20px);
+    }
     ul {
         margin: 0;
         padding: 0;
@@ -393,11 +403,31 @@
             border-right: 1px solid #9f9f9f;
             li {
                 padding-right: 30px;
+                @media (max-width: 525px) {
+                    padding-right: 15px;
+                }
+                @media (max-width: 375px) {
+                    padding-right: 10px;
+                }
             }
+           
         }
         &:nth-child(2) {
             padding-left: 30px;
+            @media (max-width: 1230px) {
+                padding-left: 16px;
+            }
+            @media (max-width: 525px) {
+                padding-left: 15px;
+            }
+            @media (max-width: 495px) {
+                padding-left: 10px;
+            }
+            @media (max-width: 425px) {
+                padding-left: 5px;
+            }
         }
+        
         li {
             display: table;
             vertical-align: middle;
@@ -408,8 +438,27 @@
             strong,
             p {
                 display: table-cell;
-                font-size: 18px;
-            }
+                font-size: 16px;
+                @media (max-width: 1230px) {
+                    font-size: 14px;
+                }
+                @media (max-width: 1075px) {
+                    font-size: 13px;
+                }
+                @media (max-width: 565px) {
+                    font-size: 13px;
+                }
+                @media (max-width: 465px) {
+                    font-size: 11px;
+                }
+                @media (max-width: 375px) {
+                    font-size: 9px;
+                }
+                @media (max-width: 325px) {
+                    font-size: 8px;
+                }              
+            } 
+
             p {
                 text-align: right;
             }
@@ -423,6 +472,7 @@
 
 .diamond-report-link {
     text-align: center;
+    padding-bottom: 15px;
     p {
         font-size: 16px;
         color: $black;
@@ -456,6 +506,9 @@
 }
 
 .gf-internam-use {
+
+    padding: 10px 0;
+
     p {
         font-size: 16px;
         color: $black;
@@ -465,6 +518,11 @@
             color: $black;
             text-decoration: underline;
         }
+    }
+    
+
+    @media (max-width: 576px) {
+        text-align: center;
     }
 }
 
@@ -510,11 +568,12 @@
     margin-bottom: 3px;
 }
 
-.diamond-details-text {
+.gf-diamond-details-text {
     margin-bottom: 10px;
     background: #f2f2f2;
     width: 100%;
     padding: 10px;
+    display: inline-block;
     span {
         color: black;
         font-size: 16px;

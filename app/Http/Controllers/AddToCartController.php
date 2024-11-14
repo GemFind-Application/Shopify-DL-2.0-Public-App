@@ -18,7 +18,15 @@ class AddToCartController extends Controller
         // exit;
 
         $shop_data = User::where('name', $request->shop_domain)->firstOrFail();
-        $shop_base_url = "https://" . $request->shop_domain;
+
+        // Get the HTTP referer
+        $referer = $_SERVER['HTTP_REFERER'] ?? '';
+
+        // Parse the URL to extract only the scheme and host
+        $parsedUrl = parse_url($referer);
+        $shop_base_url = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
+
+        // $shop_base_url = "https://" . $request->shop_domain;
         $diamond_product_id = "";
         $setting_product_id = "";
         if ($request->diamond_id) {

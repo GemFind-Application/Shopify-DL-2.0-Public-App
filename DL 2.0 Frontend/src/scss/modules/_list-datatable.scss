@@ -2,9 +2,10 @@
   margin: 10px 0;
   .gf-table {
     overflow-x: scroll;
-    width: 100%;
-    @media (min-width: 992px) {
+    
+    @media (min-width: 426px) {
       overflow-x: inherit;
+      width: 100%;
     }
     thead {
       background-color: $black;

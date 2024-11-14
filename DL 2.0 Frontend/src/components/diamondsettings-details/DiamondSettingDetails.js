@@ -559,6 +559,8 @@ const DiamondSettingDetails = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     if (
       getsettingcookies._shopify_ringsetting &&
       getsettingcookies._shopify_ringsetting[0].setting_id
@@ -821,6 +823,14 @@ const DiamondSettingDetails = () => {
             .gf-product-info__title h4.gf-ring-spacifacation a span i:hover{
               color:${window.initData["data"][0].hover_colour};
             }
+
+             .gf-diamond-mobile-specification a span i{
+              color:${window.initData["data"][0].button_colour};
+            }
+            .gf-diamond-mobile-specification a span i:hover{
+              color:${window.initData["data"][0].hover_colour};
+            }
+
             .gf-diamond-back-button a{
               color:${window.initData["data"][0].button_colour};
             }

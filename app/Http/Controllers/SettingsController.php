@@ -36,119 +36,136 @@ class SettingsController extends Controller
                 ->where(['name' => $requestData['data']['shopDomain']])
                 ->first();
             $domain = $value['shopDomain'];
-            if ($contains) {
-                if ($value['business'] == '') {
-                    return response()->json(['message' => 'Name of Business field is required', 'status' => 'fail']);
-                }
-                if ($value['fullname'] == '') {
-                    return response()->json(['message' => 'First and Last name field is required', 'status' => 'fail']);
-                }
-                if ($value['address'] == '') {
-                    return response()->json(['message' => 'Address field is required', 'status' => 'fail']);
-                }
-                if ($value['state'] == '') {
-                    return response()->json(['message' => 'State field is required', 'status' => 'fail']);
-                }
-                if ($value['city'] == '') {
-                    return response()->json(['message' => 'City field is required', 'status' => 'fail']);
-                }
-                if ($value['zipcode'] == '') {
-                    return response()->json(['message' => 'Zipcode field is required', 'status' => 'fail']);
-                }
-                if ($value['telephone'] == '') {
-                    return response()->json(['message' => 'Telephone field is required', 'status' => 'fail']);
-                }
-                if ($value['website'] == '') {
-                    return response()->json(['message' => 'Website Url field is required', 'status' => 'fail']);
-                }
-                if ($value['email'] == '') {
-                    return response()->json(['message' => 'Email field is required', 'status' => 'fail']);
-                }
-                if ($value['notes'] == '') {
-                    return response()->json(['message' => 'Notes field is required', 'status' => 'fail']);
-                }
-                $domainExists = DB::table('customer')
-                    ->where(['shop' => $value['shopDomain']])
-                    ->first();
-                if ($domainExists) {
-                    $updateData = [
-                        'business' => $value['business'],
-                        'name' => $value['fullname'],
-                        'address' => $value['address'],
-                        'state' => $value['state'],
-                        'city' => $value['city'],
-                        'zip_code' => $value['zipcode'],
-                        'telephone' => $value['telephone'],
-                        'website' => $value['website'],
-                        'email' => $value['email'],
-                        'notes' => $value['notes'],
-                        'shop' => $value['shopDomain'],
-                        'created_at' => date('Y-m-d h:i:s'),
-                        'updated_at' => date('Y-m-d h:i:s'),
-                    ];
-                    $saveSmtpData = DB::table('customer')->update($updateData);
-                } else {
-                    $insertData = [
-                        'business' => $value['business'],
-                        'name' => $value['fullname'],
-                        'address' => $value['address'],
-                        'state' => $value['state'],
-                        'city' => $value['city'],
-                        'zip_code' => $value['zipcode'],
-                        'telephone' => $value['telephone'],
-                        'website' => $value['website'],
-                        'email' => $value['email'],
-                        'notes' => $value['notes'],
-                        'shop' => $value['shopDomain'],
-                        'created_at' => date('Y-m-d h:i:s'),
-                        'updated_at' => date('Y-m-d h:i:s'),
-                    ];
-                    $inserSettingsData = [
-                        'shop' => $value['shopDomain'],
-                        'dealerid' => '1089',
-                        'admin_email_address' => 'support@gemfind.com',
-                        'dealerauthapi' => 'http://api.jewelcloud.com/api/RingBuilder/AccountAuthentication',
-                        'ringfiltersapi' => 'http://api.jewelcloud.com/api/RingBuilder/GetFilters?',
-                        'mountinglistapi' => 'http://api.jewelcloud.com/api/RingBuilder/GetMountingList?',
-                        'mountinglistapifancy' => 'http://api.jewelcloud.com/api/RingBuilder/GetMountingDetail?',
-                        'ringstylesettingapi' => 'http://api.jewelcloud.com/api/RingBuilder/GetStyleSetting?',
-                        'navigationapi' => 'http://api.jewelcloud.com/api/RingBuilder/GetNavigation?',
-                        'filterapi' => 'http://api.jewelcloud.com/api/RingBuilder/GetDiamondFilter?',
-                        'filterapifancy' => 'http://api.jewelcloud.com/api/RingBuilder/GetColorDiamondFilter?',
-                        'diamondlistapi' => 'http://api.jewelcloud.com/api/RingBuilder/GetDiamond?',
-                        'diamondlistapifancy' => 'http://api.jewelcloud.com/api/RingBuilder/GetColorDiamond?',
-                        'diamondshapeapi' => 'http://api.jewelcloud.com/api/ringbuilder/GetShapeByColorFilter?',
-                        'diamonddetailapi' => 'http://api.jewelcloud.com/api/RingBuilder/GetDiamondDetail?',
-                        'stylesettingapi' => 'http://api.jewelcloud.com/api/RingBuilder/GetStyleSetting?',
-                        'getvideoapi' => 'https://api.jewelcloud.com/api/jewelry/GetVideoUrl?',
-                        'enable_hint' => '1',
-                        'enable_email_friend' => '1',
-                        'enable_schedule_viewing' => '1',
-                        'enable_more_info' => '1',
-                        'enable_print' => '1',
-                        'enable_admin_notification' => '1',
-                        'show_filter_info' => '1',
-                        'default_viewmode' => '1',
-                        'show_powered_by' => '1',
-                        'enable_sticky_header' => '1',
-                        'price_row_format' => '1',
-                        'showDefaultDiamondImage' => '1',
-                        'display_tryon' => '0',
-                        'announcement_text' => '',
-                        'announcement_text_rbdetail' => '',
-                        'type_1' => '0',
-                        'settings_carat_ranges' => '{"0.25":[0.2,0.3],"0.33":[0.31,0.4],"0.50":[0.41,0.65],"0.75":[0.66,0.85],"1.00":[0.86,1.14],"1.25":[1.15,1.40],"1.50":[1.41,1.65],"1.75":[1.66,1.85],"2.00":[1.86,2.15],"2.25":[2.16,2.45],"2.50":[2.46,2.65],"2.75":[2.66,2.85],"3.00":[2.85,3.25]}',
-                        'site_key' => '',
-                        'secret_key' => '',
-                        'created_at' => date('Y-m-d h:i:s'),
-                        'updated_at' => date('Y-m-d h:i:s'),
-                    ];
-                    $saveSmtpData = DB::table('diamondlink_config')->insert($inserSettingsData);
-                    $saveSmtpData = DB::table('customer')->insert($insertData);
-                }
-            } else {
-                return response()->json(['message' => 'Please enter a Valid Email', 'status' => 'fail']);
+            // if ($contains) {
+            if ($value['business'] == '') {
+                return response()->json(['message' => 'Name of Business field is required', 'status' => 'fail']);
             }
+            if ($value['fullname'] == '') {
+                return response()->json(['message' => 'First and Last name field is required', 'status' => 'fail']);
+            }
+            if ($value['email'] == '') {
+                return response()->json(['message' => 'Email field is required', 'status' => 'fail']);
+            } else {
+                if (!$contains) {
+                    return response()->json(['message' => 'Please enter a Valid Email', 'status' => 'fail']);
+                }
+            }
+
+            if ($value['telephone'] == '') {
+                return response()->json(['message' => 'Telephone field is required', 'status' => 'fail']);
+            }
+            if ($value['address'] == '') {
+                return response()->json(['message' => 'Address field is required', 'status' => 'fail']);
+            }
+            if ($value['city'] == '') {
+                return response()->json(['message' => 'City field is required', 'status' => 'fail']);
+            }
+
+            if ($value['state'] == '') {
+                return response()->json(['message' => 'State field is required', 'status' => 'fail']);
+            }
+
+            if ($value['country'] == '') {
+                return response()->json(['message' => 'Country field is required', 'status' => 'fail']);
+            }
+
+            if ($value['zipcode'] == '') {
+                return response()->json(['message' => 'Zipcode field is required', 'status' => 'fail']);
+            }
+
+            if ($value['website'] == '') {
+                return response()->json(['message' => 'Website Url field is required', 'status' => 'fail']);
+            }
+
+            if ($value['jicertified'] == '') {
+                return response()->json(['message' => 'Are you in the Jewelry Industry with a business license? field is required', 'status' => 'fail']);
+            }
+            $domainExists = DB::table('customer')
+                ->where(['shop' => $value['shopDomain']])
+                ->first();
+            if ($domainExists) {
+                $updateData = [
+                    'business' => $value['business'],
+                    'name' => $value['fullname'],
+                    'address' => $value['address'],
+                    'state' => $value['state'],
+                    'city' => $value['city'],
+                    'zip_code' => $value['zipcode'],
+                    'telephone' => $value['telephone'],
+                    'website' => $value['website'],
+                    'country' => $value['country'],
+                    'jicertified' => $value['jicertified'],
+                    'email' => $value['email'],
+                    'notes' => $value['notes'],
+                    'shop' => $value['shopDomain'],
+                    'created_at' => date('Y-m-d h:i:s'),
+                    'updated_at' => date('Y-m-d h:i:s'),
+                ];
+                $saveSmtpData = DB::table('customer')->update($updateData);
+            } else {
+                $insertData = [
+                    'business' => $value['business'],
+                    'name' => $value['fullname'],
+                    'address' => $value['address'],
+                    'state' => $value['state'],
+                    'city' => $value['city'],
+                    'zip_code' => $value['zipcode'],
+                    'telephone' => $value['telephone'],
+                    'website' => $value['website'],
+                    'country' => $value['country'],
+                    'jicertified' => $value['jicertified'],
+                    'email' => $value['email'],
+                    'notes' => $value['notes'],
+                    'shop' => $value['shopDomain'],
+                    'created_at' => date('Y-m-d h:i:s'),
+                    'updated_at' => date('Y-m-d h:i:s'),
+                ];
+                $inserSettingsData = [
+                    'shop' => $value['shopDomain'],
+                    'dealerid' => '1089',
+                    'admin_email_address' => 'dev@gemfind.com',
+                    'dealerauthapi' => 'http://api.jewelcloud.com/api/RingBuilder/AccountAuthentication',
+                    'ringfiltersapi' => 'http://api.jewelcloud.com/api/RingBuilder/GetFilters?',
+                    'mountinglistapi' => 'http://api.jewelcloud.com/api/RingBuilder/GetMountingList?',
+                    'mountinglistapifancy' => 'http://api.jewelcloud.com/api/RingBuilder/GetMountingDetail?',
+                    'ringstylesettingapi' => 'http://api.jewelcloud.com/api/RingBuilder/GetStyleSetting?',
+                    'navigationapi' => 'http://api.jewelcloud.com/api/RingBuilder/GetNavigation?',
+                    'filterapi' => 'http://api.jewelcloud.com/api/RingBuilder/GetDiamondFilter?',
+                    'filterapifancy' => 'http://api.jewelcloud.com/api/RingBuilder/GetColorDiamondFilter?',
+                    'diamondlistapi' => 'http://api.jewelcloud.com/api/RingBuilder/GetDiamond?',
+                    'diamondlistapifancy' => 'http://api.jewelcloud.com/api/RingBuilder/GetColorDiamond?',
+                    'diamondshapeapi' => 'http://api.jewelcloud.com/api/ringbuilder/GetShapeByColorFilter?',
+                    'diamonddetailapi' => 'http://api.jewelcloud.com/api/RingBuilder/GetDiamondDetail?',
+                    'stylesettingapi' => 'http://api.jewelcloud.com/api/RingBuilder/GetStyleSetting?',
+                    'getvideoapi' => 'https://api.jewelcloud.com/api/jewelry/GetVideoUrl?',
+                    'enable_hint' => '1',
+                    'enable_email_friend' => '1',
+                    'enable_schedule_viewing' => '1',
+                    'enable_more_info' => '1',
+                    'enable_print' => '1',
+                    'enable_admin_notification' => '1',
+                    'show_filter_info' => '1',
+                    'default_viewmode' => '1',
+                    'show_powered_by' => '1',
+                    'enable_sticky_header' => '1',
+                    'price_row_format' => '1',
+                    'showDefaultDiamondImage' => '1',
+                    'display_tryon' => '0',
+                    'announcement_text' => '',
+                    'announcement_text_rbdetail' => '',
+                    'type_1' => '0',
+                    'settings_carat_ranges' => '{"0.25":[0.2,0.3],"0.33":[0.31,0.4],"0.50":[0.41,0.65],"0.75":[0.66,0.85],"1.00":[0.86,1.14],"1.25":[1.15,1.40],"1.50":[1.41,1.65],"1.75":[1.66,1.85],"2.00":[1.86,2.15],"2.25":[2.16,2.45],"2.50":[2.46,2.65],"2.75":[2.66,2.85],"3.00":[2.85,3.25]}',
+                    'site_key' => '',
+                    'secret_key' => '',
+                    'created_at' => date('Y-m-d h:i:s'),
+                    'updated_at' => date('Y-m-d h:i:s'),
+                ];
+                $saveSmtpData = DB::table('diamondlink_config')->insert($inserSettingsData);
+                $saveSmtpData = DB::table('customer')->insert($insertData);
+            }
+            // } else {
+            //     return response()->json(['message' => 'Please enter a Valid Email', 'status' => 'fail']);
+            // }
 
             $url = 'https://' . $requestData['data']['shopDomain'] . '/admin/api/2020-07/graphql.json';
             $qry = '{
@@ -334,6 +351,8 @@ class SettingsController extends Controller
             }
         }
 
+        $jicertified = $value['jicertified'] == 1 ? 'Yes' : 'No';
+
         //MAIL TO USER
         $data = [
             'business' => $value['business'],
@@ -344,19 +363,21 @@ class SettingsController extends Controller
             'zipcode' => $value['zipcode'],
             'telephone' => $value['telephone'],
             'website' => $value['website'],
+            'country' => $value['country'],
+            'jicertified' => $jicertified,
             'email' => $value['email'],
-            'notes' => $value['notes'],
+            'notes' => $value['notes'] ? $value['notes'] : '',
         ];
         $user['to'] = $value['email'];
         // Create an array of additional recipients
-        $recipients = ['support@gemfind.com'];
+        $recipients = ['dev@gemfind.com'];
 
         // Merge the additional recipients with the main recipient
         // $recipients = array_merge([$user['to']], $additionalRecipients);
         Mail::send('customerDetails', $data, function ($messages) use ($recipients) {
             $messages->to($recipients);
-            $messages->from('support@gemfind.com', 'DiamondLink');
-            $messages->subject('DiamondLink : Customer Information Form');
+            $messages->from('dev@gemfind.com', 'GemFind DiamondLinkⓇ Dev');
+            $messages->subject('GemFind DiamondLinkⓇ Dev : Customer Information Form');
         });
         return response()->json(['message' => 'Customer added successfully', 'status' => 'success']);
         // exit;
@@ -368,6 +389,7 @@ class SettingsController extends Controller
         // echo '<pre>';print_r($requestData);exit;
         foreach ($requestData as $value) {
             if ($value['dealerId'] == '') {
+                // $value['dealerId'] = "1089";
                 return response()->json(['message' => 'Name of Business field is required', 'status' => 'fail']);
             }
             if ($value['adminEmail'] == '') {

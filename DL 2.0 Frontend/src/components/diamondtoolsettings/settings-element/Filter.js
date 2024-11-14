@@ -447,14 +447,16 @@ const Filter = (props) => {
                 getTab === "mined" || getTab === "" ? "gf-active" : ""
               }`}
             >
-              <a href="javascript:;" onClick={handletab} id="mined">
-                {getminedsetting}
-              </a>
-              {window.initData.data[0].show_filter_info === "1" && (
-                <span onClick={() => setOpenFirsts(true)}>
-                  <i className="fas fa-info-circle"></i>{" "}
-                </span>
-              )}
+              <div className="gf_n_filter_div">
+                <a href="javascript:;" onClick={handletab} id="mined">
+                  {getminedsetting}
+                </a>
+                {window.initData.data[0].show_filter_info === "1" && (
+                  <span onClick={() => setOpenFirsts(true)}>
+                    <i className="fas fa-info-circle"></i>{" "}
+                  </span>
+                )}
+              </div>
               <Modal
                 open={openFirsts}
                 onClose={() => setOpenFirsts(false)}
@@ -478,14 +480,16 @@ const Filter = (props) => {
           )}
           {getlabsetting !== "" && getlabsetting !== null && (
             <li className={`${getTab === "labgrown" ? "gf-active" : ""}`}>
-              <a href="javascript:;" onClick={handletab} id="labgrown">
-                {getlabsetting}
-              </a>
-              {window.initData.data[0].show_filter_info === "1" && (
-                <span onClick={() => setOpenSeconds(true)}>
-                  <i className="fas fa-info-circle"></i>{" "}
-                </span>
-              )}
+              <div className="gf_n_filter_div">
+                <a href="javascript:;" onClick={handletab} id="labgrown">
+                  {getlabsetting}
+                </a>
+                {window.initData.data[0].show_filter_info === "1" && (
+                  <span onClick={() => setOpenSeconds(true)}>
+                    <i className="fas fa-info-circle"></i>{" "}
+                  </span>
+                )}
+              </div>
               <Modal
                 open={openSeconds}
                 onClose={() => setOpenSeconds(false)}
@@ -511,14 +515,16 @@ const Filter = (props) => {
           )}
           {getfcsetting !== "" && getfcsetting !== null && (
             <li className={`${getTab === "fancycolor" ? "gf-active" : ""}`}>
-              <a href="javascript:;" onClick={handletab} id="fancycolor">
-                {getfcsetting}
-              </a>
-              {window.initData.data[0].show_filter_info === "1" && (
-                <span onClick={() => setOpenThirds(true)}>
-                  <i className="fas fa-info-circle"></i>{" "}
-                </span>
-              )}
+              <div className="gf_n_filter_div">
+                <a href="javascript:;" onClick={handletab} id="fancycolor">
+                  {getfcsetting}
+                </a>
+                {window.initData.data[0].show_filter_info === "1" && (
+                  <span onClick={() => setOpenThirds(true)}>
+                    <i className="fas fa-info-circle"></i>{" "}
+                  </span>
+                )}
+              </div>
               <Modal
                 open={openThirds}
                 onClose={() => setOpenThirds(false)}
@@ -542,9 +548,11 @@ const Filter = (props) => {
           )}
           {getcomparesetting !== "" && getcomparesetting !== null && (
             <li className={`${getTab === "compare" ? "gf-active" : ""}`}>
-              <a href="javascript:;" onClick={handletab} id="compare">
-                {getcomparesetting}
-              </a>
+              <div className="gf_n_filter_div">
+                <a href="javascript:;" onClick={handletab} id="compare">
+                  {getcomparesetting}
+                </a>
+              </div>
             </li>
           )}
         </ul>

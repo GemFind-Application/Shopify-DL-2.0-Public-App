@@ -59,46 +59,50 @@ const DiamondProductInformation = (props) => {
   const [isRecaptchaVerified, setIsRecaptchaVerified] = useState(false);
   const currentDate = new Date().toISOString().split("T")[0];
 
-  const addressList = props.productDetailsData.retailerInfo.addressList;
+  const addressList = props.productDetailsData.retailerInfo.addressList
+    ? props.productDetailsData.retailerInfo.addressList
+    : [];
 
-  const timingList = props.productDetailsData.retailerInfo.timingList;
+  const timingList = props.productDetailsData.retailerInfo.timingList
+    ? props.productDetailsData.retailerInfo.timingList
+    : [];
 
   // Extract the day names, start times, and end times
   const days = [
     {
       name: "Sunday",
-      start: timingList ? timingList[0].sundayStart : "NA",
-      end: timingList ? timingList[0].sundayEnd : "NA",
+      start: timingList && timingList[0] ? timingList[0].sundayStart : "NA",
+      end: timingList && timingList[0] ? timingList[0].sundayEnd : "NA",
     },
     {
       name: "Monday",
-      start: timingList ? timingList[0].mondayStart : "NA",
-      end: timingList ? timingList[0].mondayEnd : "NA",
+      start: timingList && timingList[0] ? timingList[0].mondayStart : "NA",
+      end: timingList && timingList[0] ? timingList[0].mondayEnd : "NA",
     },
     {
       name: "Tuesday",
-      start: timingList ? timingList[0].tuesdayStart : "NA",
-      end: timingList ? timingList[0].tuesdayEnd : "NA",
+      start: timingList && timingList[0] ? timingList[0].tuesdayStart : "NA",
+      end: timingList && timingList[0] ? timingList[0].tuesdayEnd : "NA",
     },
     {
       name: "Wednesday",
-      start: timingList ? timingList[0].wednesdayStart : "NA",
-      end: timingList ? timingList[0].wednesdayEnd : "NA",
+      start: timingList && timingList[0] ? timingList[0].wednesdayStart : "NA",
+      end: timingList && timingList[0] ? timingList[0].wednesdayEnd : "NA",
     },
     {
       name: "Thursday",
-      start: timingList ? timingList[0].thursdayStart : "NA",
-      end: timingList ? timingList[0].thursdayEnd : "NA",
+      start: timingList && timingList[0] ? timingList[0].thursdayStart : "NA",
+      end: timingList && timingList[0] ? timingList[0].thursdayEnd : "NA",
     },
     {
       name: "Friday",
-      start: timingList ? timingList[0].fridayStart : "NA",
-      end: timingList ? timingList[0].fridayEnd : "NA",
+      start: timingList && timingList[0] ? timingList[0].fridayStart : "NA",
+      end: timingList && timingList[0] ? timingList[0].fridayEnd : "NA",
     },
     {
       name: "Saturday",
-      start: timingList ? timingList[0].saturdayStart : "NA",
-      end: timingList ? timingList[0].saturdayEnd : "NA",
+      start: timingList && timingList[0] ? timingList[0].saturdayStart : "NA",
+      end: timingList && timingList[0] ? timingList[0].saturdayEnd : "NA",
     },
   ];
 
@@ -110,13 +114,13 @@ const DiamondProductInformation = (props) => {
   useEffect(() => {
     const foundDays = daysWithSlots.map((day) => day.name);
     const allDays = [
+      "Sunday",
       "Monday",
       "Tuesday",
       "Wednesday",
       "Thursday",
       "Friday",
       "Saturday",
-      "Sunday",
     ];
     const missing = allDays.filter((day) => !foundDays.includes(day));
     setMissingDays(missing);
@@ -566,6 +570,7 @@ const DiamondProductInformation = (props) => {
 
   const [getschderror, setschderror] = useState([""]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [showTime, setShowtime] = useState(false);
 
   const [getblankvalue, setblankvalue] = useState([""]);
 
@@ -594,9 +599,11 @@ const DiamondProductInformation = (props) => {
 
     if (missingDays.includes(selectedDay)) {
       setErrorMessage("Slots not available on selected date");
+      setShowtime(false);
       setschddate("");
     } else {
       setErrorMessage("");
+      setShowtime(true);
       setschddate(selectedDate);
     }
   };
@@ -872,7 +879,7 @@ const DiamondProductInformation = (props) => {
               <span>
                 <i className="far fa-edit"></i>
               </span>
-              Diamond Specification
+              Diamond Details
             </a>
           </h4>
           <Modal
@@ -1133,26 +1140,35 @@ const DiamondProductInformation = (props) => {
         <div className="gf-product-info__descreption">
           <p>{props.productDetailsData.subHeader}</p>
         </div>
+
         <div className="gf-diamond-intro-field">
           <ul>
             <li>
-              <strong>Report:</strong>
-              {props.productDetailsData.certificate !== "" && (
-                <p>{props.productDetailsData.certificate}</p>
-              )}
-              {props.productDetailsData.certificate === "" && <p>None</p>}
-            </li>
-            <li>
-              <strong>Cut:</strong>
+              <strong>Cut :</strong>
               {props.productDetailsData.cut !== "" && (
-                <p>{props.productDetailsData.color}</p>
+                <p>{props.productDetailsData.cut}</p>
               )}
               {props.productDetailsData.cut === "" && <p>NA</p>}
+            </li>
+            <li>
+              <strong>Polish :</strong>
+              {props.productDetailsData.polish !== "" && (
+                <p>{props.productDetailsData.polish}</p>
+              )}
+              {props.productDetailsData.polish === "" && <p>None</p>}
+            </li>
+            <li>
+              <strong>Symmetry :</strong>
+              <p>
+                {props.productDetailsData.symmetry
+                  ? props.productDetailsData.symmetry
+                  : "NA"}
+              </p>
             </li>
           </ul>
           <ul>
             <li>
-              <strong>Color:</strong>
+              <strong>Color :</strong>
               <p>
                 {props.productDetailsData.color
                   ? props.productDetailsData.color
@@ -1160,15 +1176,35 @@ const DiamondProductInformation = (props) => {
               </p>
             </li>
             <li>
-              <strong>Clarity:</strong>
+              <strong>Clarity :</strong>
               <p>
                 {props.productDetailsData.clarity
                   ? props.productDetailsData.clarity
                   : "NA"}
               </p>
             </li>
+            <li>
+              <strong>Fluorescence :</strong>
+              <p>
+                {props.productDetailsData.fluorescence
+                  ? props.productDetailsData.fluorescence
+                  : "NA"}
+              </p>
+            </li>
           </ul>
         </div>
+
+        <div>
+          <h4 className="gf-diamond-mobile-specification">
+            <a href="#" onClick={onOpenModal}>
+              <span>
+                <i className="far fa-edit"></i>
+              </span>
+              Diamond Details
+            </a>
+          </h4>
+        </div>
+
         <div className="gf-product-controller">
           <ul>
             {window.initData.data[0].enable_hint === "1" && (
@@ -1668,24 +1704,26 @@ const DiamondProductInformation = (props) => {
                         <p> {getschderror.yourdate} </p>
                         {errorMessage && <p>{errorMessage}</p>}
 
-                        <Select
-                          labelId="demo-simple-select-standard-label"
-                          id="select_time"
-                          value={getschdtime}
-                          onChange={handleSchdtime}
-                          label="Time"
-                          focused
-                          variant="outlined"
-                        >
-                          {daysWithSlots.map((day, index) => (
-                            <MenuItem
-                              key={index}
-                              value={`${day.name}: ${day.start} - ${day.end}`}
-                            >
-                              {`${day.name}: ${day.start} - ${day.end}`}
-                            </MenuItem>
-                          ))}
-                        </Select>
+                        {showTime === true && (
+                          <Select
+                            labelId="demo-simple-select-standard-label"
+                            id="select_time"
+                            value={getschdtime}
+                            onChange={handleSchdtime}
+                            label="Time"
+                            focused
+                            variant="outlined"
+                          >
+                            {daysWithSlots.map((day, index) => (
+                              <MenuItem
+                                key={index}
+                                value={`${day.name}: ${day.start} - ${day.end}`}
+                              >
+                                {`${day.name}: ${day.start} - ${day.end}`}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        )}
 
                         <p> {getschderror.yourtime} </p>
 
@@ -1719,6 +1757,14 @@ const DiamondProductInformation = (props) => {
             )}
           </ul>
         </div>
+
+        {window.initData.data[0].announcement_text_rbdetail !== "" &&
+          window.initData.data[0].announcement_text_rbdetail !== null && (
+            <div className="gf-diamond-details-text">
+              <span>{window.initData.data[0].announcement_text_rbdetail}</span>
+            </div>
+          )}
+
         <div className="gf-diamond-tryon">
           <span>
             {props.productDetailsData.fltPrice === "Call for Price"

@@ -6,16 +6,13 @@ import Skeleton from "react-loading-skeleton";
 import { useCookies } from "react-cookie";
 
 const PriceSlider = (props) => {
-  // Our States
-  // console.log(props);
-
   const [open, setOpen] = useState(false);
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
   const [loaded, setLoaded] = useState(false);
   const marks = props.pricerangeData;
-  const [startValue, setstartValue] = useState(Number(props.pricemindata));
-  const [lastValue, setlastValue] = useState(Number(props.pricemaxdata));
+  const [startValue, setStartValue] = useState(Number(props.pricemindata));
+  const [lastValue, setLastValue] = useState(Number(props.pricemaxdata));
   const [loadedfirst, setloadedfirst] = useState(false);
 
   const [getsettingcookies, setsettingcookies] = useCookies([
@@ -27,40 +24,37 @@ const PriceSlider = (props) => {
   const [getfancycookies, setfancycookies] = useCookies([
     "_wpsavedfancydiamondfiltercookie",
   ]);
-  //   console.log("props");
-  //   console.log(props);
-  // Changing State when volume increases/decreases
+
   const rangeSelector = (newValue) => {
-    setstartValue(parseInt(newValue[0]));
-    setlastValue(parseInt(newValue[1]));
+    setStartValue(parseFloat(newValue[0]).toFixed(2));
+    setLastValue(parseFloat(newValue[1]).toFixed(2));
 
     let sliderSelection = [];
-    sliderSelection.push(parseInt(newValue[0]));
-    sliderSelection.push(parseInt(newValue[1]));
+    sliderSelection.push(parseFloat(newValue[0]).toFixed(2));
+    sliderSelection.push(parseFloat(newValue[1]).toFixed(2));
   };
+
   const rangeSelectorprops = (newValue) => {
-    setstartValue(parseInt(newValue[0]));
-    setlastValue(parseInt(newValue[1]));
+    setStartValue(parseFloat(newValue[0]).toFixed(2));
+    setLastValue(parseFloat(newValue[1]).toFixed(2));
 
     let sliderSelection = [];
-    sliderSelection.push(parseInt(newValue[0]));
-    sliderSelection.push(parseInt(newValue[1]));
-    // props.callBack(newValue);
+    sliderSelection.push(parseFloat(newValue[0]).toFixed(2));
+    sliderSelection.push(parseFloat(newValue[1]).toFixed(2));
     props.callBack(sliderSelection);
   };
 
   const startValueOnChange = (event) => {
-    const intValue = parseInt(event.target.value);
+    const intValue = parseFloat(event.target.value);
     if (
-      Number.isInteger(intValue) &&
+      !isNaN(intValue) &&
       intValue >= 0 &&
       intValue <= Number(marks[0].maxPrice)
     ) {
-      setstartValue(event.target.value);
+      setStartValue(intValue.toFixed(2));
       let sliderSelection = [];
-      sliderSelection.push(parseInt(event.target.value));
+      sliderSelection.push(intValue.toFixed(2));
       sliderSelection.push(lastValue);
-      ////console.log("continue start value change");
       props.callBack(sliderSelection);
     } else {
       alert("Please Enter Valid Value");
@@ -69,17 +63,16 @@ const PriceSlider = (props) => {
   };
 
   const endValueOnChange = (event) => {
-    const intValue = parseInt(event.target.value);
+    const intValue = parseFloat(event.target.value);
     if (
-      Number.isInteger(intValue) &&
+      !isNaN(intValue) &&
       intValue >= 0 &&
       intValue <= Number(marks[0].maxPrice)
     ) {
-      setlastValue(event.target.value);
+      setLastValue(intValue.toFixed(2));
       let sliderSelection = [];
       sliderSelection.push(startValue);
-      sliderSelection.push(parseInt(event.target.value));
-      //console.log("continue end value change");
+      sliderSelection.push(intValue.toFixed(2));
       props.callBack(sliderSelection);
     } else {
       alert("Please Enter Valid Value");
@@ -95,14 +88,14 @@ const PriceSlider = (props) => {
         getfancycookies._wpsavedfancydiamondfiltercookie.pricemin &&
         getfancycookies._wpsavedfancydiamondfiltercookie.pricemax
       ) {
-        setstartValue(Number(props.pricemindata));
-        setlastValue(Number(props.pricemaxdata));
+        setStartValue(Number(props.pricemindata).toFixed(2));
+        setLastValue(Number(props.pricemaxdata).toFixed(2));
       }
     }
 
     if (props.pricemindata === "" && props.pricemaxdata === "") {
-      setstartValue(Number(marks[0].minPrice));
-      setlastValue(Number(marks[0].maxPrice));
+      setStartValue(Number(marks[0].minPrice).toFixed(2));
+      setLastValue(Number(marks[0].maxPrice).toFixed(2));
     }
 
     if (props.callbacktab === "mined") {
@@ -111,8 +104,8 @@ const PriceSlider = (props) => {
         getsettingcookies._wpsavediamondfiltercookie.pricemin &&
         getsettingcookies._wpsavediamondfiltercookie.pricemax
       ) {
-        setstartValue(Number(props.pricemindata));
-        setlastValue(Number(props.pricemaxdata));
+        setStartValue(Number(props.pricemindata).toFixed(2));
+        setLastValue(Number(props.pricemaxdata).toFixed(2));
       }
     }
     if (props.callbacktab === "labgrown") {
@@ -121,8 +114,8 @@ const PriceSlider = (props) => {
         getlabcookies._wpsavedlabgowndiamondfiltercookie.pricemin &&
         getlabcookies._wpsavedlabgowndiamondfiltercookie.pricemax
       ) {
-        setstartValue(Number(props.pricemindata));
-        setlastValue(Number(props.pricemaxdata));
+        setStartValue(Number(props.pricemindata).toFixed(2));
+        setLastValue(Number(props.pricemaxdata).toFixed(2));
       }
     }
   }, [props]);
@@ -150,9 +143,9 @@ const PriceSlider = (props) => {
           >
             <div className="popup_content">
               <p>
-                This refer to different type of Price to filter and select the
-                appropriate ring as per your requirements. Look for best suit
-                price of your chosen ring.
+                This refers to different types of Price to filter and select the
+                appropriate ring as per your requirements. Look for the best
+                suit price of your chosen ring.
               </p>
             </div>
           </Modal>
@@ -161,18 +154,19 @@ const PriceSlider = (props) => {
               connect
               behaviour={"snap"}
               start={[
-                props.pricemindata ? props.pricemindata : startValue,
-                props.pricemaxdata ? props.pricemaxdata : lastValue,
+                props.pricemindata
+                  ? parseFloat(props.pricemindata).toFixed(2)
+                  : startValue,
+                props.pricemaxdata
+                  ? parseFloat(props.pricemaxdata).toFixed(2)
+                  : lastValue,
               ]}
               range={{
                 min: Number(marks[0].minPrice),
                 max: Number(marks[0].maxPrice),
               }}
-              // format={{ Number }}
               tooltips={true}
-              // onUpdate={rangeSelector} // for example updating a state value
               onChange={rangeSelectorprops}
-              // onSlide={rangeSelector}
             />
           </div>
         </div>
@@ -198,7 +192,7 @@ const PriceSlider = (props) => {
                   ? "input-left"
                   : ""
               }
-            />{" "}
+            />
           </div>
           <div className="input-value-right">
             <span
