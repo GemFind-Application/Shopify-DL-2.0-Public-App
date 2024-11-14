@@ -10,9 +10,9 @@ const Fancyintensity = (props) => {
   const onCloseModal = () => setOpen(false);
   const [loaded, setLoaded] = useState(false);
   const marks1 = props.getIntensityData;
-  const [getstartColor, setstartColor] = useState(Number(marks1[0].$id));
+  const [getstartColor, setstartColor] = useState(Number(marks1[0].intensityId));
   const [getendColor, setendColor] = useState(
-    Number(marks1[marks1.length - 1].$id)
+    Number(marks1[marks1.length - 1].intensityId)
   );
   const CssClasses = {
     target: "target",
@@ -55,7 +55,7 @@ const Fancyintensity = (props) => {
 
   function colorDiamond(value) {
     var res = props.getIntensityData.filter(function (v) {
-      return v.$id == value;
+      return v.intensityId == value;
     });
     return res[0].intensityName;
   }
@@ -69,12 +69,12 @@ const Fancyintensity = (props) => {
   useEffect(() => {
     const markData = props.getIntensityData;
     // console.log(markData);
-    // console.log(markData[0].$id);
-    // console.log(markData[markData.length - 1].$id);
+    // console.log(markData[0].intensityId);
+    // console.log(markData[markData.length - 1].intensityId);
     // console.log(props.setSelectedIntensityData);
     // if (props.setSelectedIntensityData === "") {
-    // setstartColor(Number(markData[0].$id));
-    // setendColor(Number(markData[markData.length - 1].$id));
+    // setstartColor(Number(markData[0].intensityId));
+    // setendColor(Number(markData[markData.length - 1].intensityId));
     // }
     if (props.setSelectedIntensityData !== "") {
       var selectedIntensityCookies = props.setSelectedIntensityData.split(",");
@@ -114,10 +114,10 @@ const Fancyintensity = (props) => {
       });
 
       // console.log(lastval);
-      setstartColor(Number(firstval[0].$id));
-      // console.log(firstval[0].$id);
-      setendColor(Number(lastval[0].$id));
-      // console.log(lastval[0].$id);
+      setstartColor(Number(firstval[0].intensityId));
+      // console.log(firstval[0].intensityId);
+      setendColor(Number(lastval[0].intensityId));
+      // console.log(lastval[0].intensityId);
     }
 
     setLoaded(true);
@@ -177,8 +177,8 @@ const Fancyintensity = (props) => {
             //   max: [getendColor],
             // }}
             range={{
-              min: Number(marks1[0].$id),
-              max: Number(marks1[marks1.length - 1].$id),
+              min: Number(marks1[0].intensityId),
+              max: Number(marks1[marks1.length - 1].intensityId),
             }}
             //onChange={handlecolorSlider}
             //onSlide={handlecolorSlider}

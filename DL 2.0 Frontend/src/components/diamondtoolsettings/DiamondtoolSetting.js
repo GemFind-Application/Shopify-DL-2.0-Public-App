@@ -231,7 +231,7 @@ const DiamondtoolSetting = (props) => {
     const startCut = colorName[0];
     const endCut = colorName[1] - 1;
     var res = getFancyColor.filter(function (v) {
-      return v.$id >= parseInt(startCut) && v.$id <= parseInt(endCut);
+      return v.id >= parseInt(startCut) && v.id <= parseInt(endCut);
     });
 
     const finalfancycolor = res
@@ -247,7 +247,9 @@ const DiamondtoolSetting = (props) => {
     const startCut = cutName[0];
     const endCut = cutName[1] - 1;
     var res = getIntensity.filter(function (v) {
-      return v.$id >= parseInt(startCut) && v.$id <= parseInt(endCut);
+      return (
+        v.intensityId >= parseInt(startCut) && v.intensityId <= parseInt(endCut)
+      );
     });
 
     const finalIntensity = res
@@ -728,23 +730,6 @@ const DiamondtoolSetting = (props) => {
       }
       // }
 
-      // if (initdataload === false) {
-      //   if (tabname === "fancycolor") {
-      //     var url =
-      //       `${window.initData.data[0].filterapifancy}DealerID=` + DealerID;
-      //   } else if (tabname === "labgrown") {
-      //     var url =
-      //       `${window.initData.data[0].filterapi}DealerID=` +
-      //       DealerID +
-      //       "&IsLabGrown=True";
-      //   } else {
-      //     var url =
-      //       `https://api.jewelcloud.com/api/RingBuilder/GetInitialFilter?DealerID=` +
-      //       DealerID;
-      //   }
-      //   setinitdataload(true);
-      // }
-
       const res = await fetch(url);
       // console.log("filter url");
       // console.log(url);
@@ -796,10 +781,11 @@ const DiamondtoolSetting = (props) => {
         var intensityData = acrualRes[1][0].intensity;
         var dynamicIntensity =
           Number(
-            acrualRes[1][0].intensity[acrualRes[1][0].intensity.length - 1].$id
+            acrualRes[1][0].intensity[acrualRes[1][0].intensity.length - 1]
+              .intensityId
           ) + 1;
         intensityData.push({
-          $id: dynamicIntensity.toString(),
+          intensityId: dynamicIntensity.toString(),
           intensityName: "Last",
         });
 
@@ -811,10 +797,10 @@ const DiamondtoolSetting = (props) => {
           Number(
             acrualRes[1][0].diamondColorRange[
               acrualRes[1][0].diamondColorRange.length - 1
-            ].$id
+            ].id
           ) + 1;
         fancycolorData.push({
-          $id: dynamicLastColor.toString(),
+          id: dynamicLastColor.toString(),
           diamondColorId: "last",
           diamondColorImagePath: "",
           diamondColorName: "Last",
@@ -824,11 +810,15 @@ const DiamondtoolSetting = (props) => {
         //console.log(getFancyColor);
 
         // THIS IS TO GET INIT TIME LOAD ALL DATA
-        const startInt = acrualRes[1][0].intensity[0].$id;
+        const startInt = acrualRes[1][0].intensity[0].intensityId;
         const endInt =
-          acrualRes[1][0].intensity[acrualRes[1][0].intensity.length - 1].$id;
+          acrualRes[1][0].intensity[acrualRes[1][0].intensity.length - 1]
+            .intensityId;
         var intensityres = acrualRes[1][0].intensity.filter(function (v) {
-          return v.$id >= parseInt(startInt) && v.$id <= parseInt(endInt);
+          return (
+            v.intensityId >= parseInt(startInt) &&
+            v.intensityId <= parseInt(endInt)
+          );
         });
         const initfinalinten = intensityres
           .map(function (m) {
@@ -852,15 +842,15 @@ const DiamondtoolSetting = (props) => {
         //console.log(getSelectedintensity);
 
         // THIS IS TO GET INIT TIME LOAD ALL DATA
-        const startFancy = acrualRes[1][0].diamondColorRange[0].$id;
+        const startFancy = acrualRes[1][0].diamondColorRange[0].id;
         const endFancy =
           acrualRes[1][0].diamondColorRange[
             acrualRes[1][0].diamondColorRange.length - 1
-          ].$id;
+          ].id;
         var resfancycolor = acrualRes[1][0].diamondColorRange.filter(function (
           v
         ) {
-          return v.$id >= parseInt(startFancy) && v.$id <= parseInt(endFancy);
+          return v.id >= parseInt(startFancy) && v.id <= parseInt(endFancy);
         });
 
         const finalfancycd = resfancycolor
@@ -868,6 +858,7 @@ const DiamondtoolSetting = (props) => {
             return m.diamondColorName;
           })
           .join(",");
+
         if (
           getfancycookies._wpsavedfancydiamondfiltercookie &&
           getfancycookies._wpsavedfancydiamondfiltercookie.selectedfancyColor
@@ -880,6 +871,8 @@ const DiamondtoolSetting = (props) => {
         }
         setFancyStatus(true);
       }
+
+      // return;
 
       // //console.log("tabname==" + gettabname);
 

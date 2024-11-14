@@ -12,9 +12,9 @@ const FancyColorSlider = (props) => {
   const marks1 = props.fancycolorSliderData;
   const [loaded, setLoaded] = useState(false);
   const [loadedfirst, setloadedfirst] = useState(false);
-  const [getstartColor, setstartColor] = useState(Number(marks1[0].$id));
+  const [getstartColor, setstartColor] = useState(Number(marks1[0].id));
   const [getendColor, setendColor] = useState(
-    Number(marks1[marks1.length - 1].$id)
+    Number(marks1[marks1.length - 1].id)
   );
   const CssClasses = {
     target: "target",
@@ -59,7 +59,7 @@ const FancyColorSlider = (props) => {
 
   function colorDiamond(value) {
     var res = props.fancycolorSliderData.filter(function (v) {
-      return v.$id == value;
+      return v.id == value;
     });
     return res[0].diamondColorName;
   }
@@ -113,9 +113,9 @@ const FancyColorSlider = (props) => {
       });
 
       //console.log(lastval);
-      setstartColor(Number(firstval[0].$id));
+      setstartColor(Number(firstval[0].id));
       //console.log(firstval[0].$id);
-      setendColor(Number(lastval[0].$id));
+      setendColor(Number(lastval[0].id));
       //console.log(lastval[0].$id);
     }
 
@@ -192,8 +192,8 @@ const FancyColorSlider = (props) => {
               //   max: [getendColor],
               // }}
               range={{
-                min: Number(marks1[0].$id),
-                max: Number(marks1[marks1.length - 1].$id),
+                min: Number(marks1[0].id),
+                max: Number(marks1[marks1.length - 1].id),
               }}
               // onSlide={handlecolorSlider}
               // onUpdate={handlecolorSlider}
